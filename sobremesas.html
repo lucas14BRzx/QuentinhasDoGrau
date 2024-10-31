@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobremesas - Menu de Refeições</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+      let cart = [];
+
+      function addToCart(item) {
+          const existingItem = cart.find(cartItem => cartItem.id === item.id);
+          if (existingItem) {
+              existingItem.quantity += item.quantity;
+          } else {
+              cart.push(item);
+          }
+          updateCartDisplay();
+      }
+
+      function updateCartDisplay() {
+          const cartItemsContainer = document.getElementById('cart-items');
+          const totalPriceContainer = document.getElementById('total-price');
+          cartItemsContainer.innerHTML = '';
+
+          let total = 0;
+          cart.forEach(item => {
+              const li = document.createElement('li');
+              li.textContent = `${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})`;
+              cartItemsContainer.appendChild(li);
+              total += item.price * item.quantity;
+          });
+
+          totalPriceContainer.textContent = total.toFixed(2);
+      }
+
+      function checkout() {
+          if (cart.length === 0) {
+              alert("Seu carrinho está vazio!");
+              return;
+          }
+
+          // Aqui você pode processar a compra (ex: enviar os dados para um servidor)
+          alert("Compra finalizada com sucesso!");
+          cart = []; // Limpa o carrinho após a finalização
+          updateCartDisplay(); // Atualiza a exibição
+      }
+
+      function navigateTo(page) {
+          window.location.href = page;
+      }
+  </script>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <h1>Opções de Sobremesas</h1>
+    <button onclick="window.location.href='index.html'">Voltar ao Menu</button>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <div class="menu-container">
+    <div class="meal-options">
+      <h2>Escolha sua Sobremesa:</h2>
+
+      <!-- Sobremesa: Pudim -->
+      <div class="meal-item">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbiReUYCSI81m4lOLWQ-NSRrnzVSCzsHpt0A&s" alt="Pudim">
+        <h3>Pudim</h3>
+        <p>Pudim de leite condensado com calda de caramelo.</p>
+        <p><strong>Preço: R$ 5,90</strong></p>
+        <label><input type="checkbox"> Retirar calda</label>
+        <button onclick="addToCart({ id: 1, name: 'Pudim', price: 5.90, quantity: 1 })">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Sobremesa: Mousse de Chocolate -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th/id/OIP.N3Hk5Tu3QurIY-5qU6o6tgHaE9?rs=1&pid=ImgDetMain" alt="Mousse de Chocolate">
+        <h3>Mousse de Chocolate</h3>
+        <p>Mousse de chocolate com raspas de chocolate.</p>
+        <p><strong>Preço: R$ 30,00</strong></p>
+        <label><input type="checkbox"> Retirar raspas de chocolate</label>
+        <button onclick="addToCart({ id: 2, name: 'Mousse de Chocolate', price: 30.00, quantity: 1 })">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Sobremesa: Torta de Limão -->
+      <div class="meal-item">
+        <img src="https://cooknenjoy.com/wp-content/uploads/2021/10/torta-de-limao-01-1800x1286-1200x675.jpg" alt="Torta de Limão">
+        <h3>Torta de Limão</h3>
+        <p>Torta com recheio de limão e cobertura de merengue.</p>
+        <p><strong>Preço: R$ 12,50</strong></p>
+        <label><input type="checkbox"> Retirar merengue</label>
+        <button onclick="addToCart({ id: 3, name: 'Torta de Limão', price: 12.50, quantity: 1 })">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Sobremesa: Pavê de Morango -->
+      <div class="meal-item">
+        <img src="https://i2.wp.com/receitasdedomingo.com.br/storage/2020/11/pave-de-morango-com-chocolate-branco-.jpg?fit=1200%2C1787&ssl=1" alt="Pavê de Morango">
+        <h3>Pavê de Morango</h3>
+        <p>Pavê de morango com camadas de creme e biscoito.</p>
+        <p><strong>Preço: R$ 28,00</strong></p>
+        <label><input type="checkbox"> Retirar biscoito</label>
+        <button onclick="addToCart({ id: 4, name: 'Pavê de Morango', price: 28.00, quantity: 1 })">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Sobremesa: Sorvete de Creme -->
+      <div class="meal-item">
+        <img src="https://cdn.casaeculinaria.com/wp-content/uploads/2023/08/02161135/Sorvete-de-creme.webp" alt="Sorvete de Creme">
+        <h3>Sorvete de Creme</h3>
+        <p>Delicioso sorvete de creme com calda de chocolate.</p>
+        <p><strong>Preço: R$ 2,90</strong></p>
+        <label><input type="checkbox"> Retirar calda de chocolate</label>
+        <button onclick="addToCart({ id: 5, name: 'Sorvete de Creme', price: 2.90, quantity: 1 })">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+
+    <div class="meal-item">
+      <img src="https://cdn.casaeculinaria.com/wp-content/uploads/2023/08/02161135/Sorvete-de-creme.webp" alt="Sorvete de Creme">
+      <h3>Sorvete de Creme</h3>
+      <p>Delicioso sorvete de creme com calda de chocolate.</p>
+      <p><strong>Preço: R$ 2,90</strong></p>
+      <label><input type="checkbox"> Retirar calda de chocolate</label>
+      <button onclick="addToCart({ id: 5, name: 'Sorvete de Creme', price: 2.90, quantity: 1 })">Adicionar ao Carrinho</button>
+    </div>
+  </div>
+
+    <!-- Carrinho de Compras -->
+    <div class="cart">
+      <h3>Carrinho de Compras</h3>
+      <ul id="cart-items"></ul>
+      <p>Total: R$ <span id="total-price">0.00</span></p>
+      <button onclick="checkout()">Finalizar Compra</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Almoço - Menu de Refeições</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    let cart = [];
+
+    function addToCart(item) {
+        const existingItem = cart.find(cartItem => cartItem.id === item.id);
+        if (existingItem) {
+            existingItem.quantity += item.quantity;
+        } else {
+            cart.push(item);
+        }
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalPriceContainer = document.getElementById('total-price');
+        cartItemsContainer.innerHTML = '';
+
+        let total = 0;
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})`;
+            cartItemsContainer.appendChild(li);
+            total += item.price * item.quantity;
+        });
+
+        totalPriceContainer.textContent = total.toFixed(2);
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert("Seu carrinho está vazio!");
+            return;
+        }
+
+        alert("Compra finalizada com sucesso!");
+        cart = [];
+        updateCartDisplay();
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'block';
+    }
+
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function toggleForm() {
+        const registerFields = document.getElementById('registerFields');
+        const loginFields = document.getElementById('loginFields');
+        const modalTitle = document.getElementById('modalTitle');
+        const toggleText = document.getElementById('toggleFormText');
+
+        if (registerFields.style.display === 'none' || registerFields.style.display === '') {
+            registerFields.style.display = 'block';
+            loginFields.style.display = 'none';
+            modalTitle.textContent = 'Registrar-se';
+            toggleText.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleForm()">Entrar</a>';
+        } else {
+            registerFields.style.display = 'none';
+            loginFields.style.display = 'block';
+            modalTitle.textContent = 'Login';
+            toggleText.innerHTML = 'Não tem uma conta? <a href="#" onclick="toggleForm()">Registrar-se</a>';
+        }
+    }
+
+    function loginWithGoogle() {
+        alert("Login com Google não implementado.");
+    }
+
+    function addItemToCart(itemName, itemPrice) {
+        const item = {
+            id: itemName,
+            name: itemName,
+            price: itemPrice,
+            quantity: 1
+        };
+        addToCart(item);
+    }
+  </script>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <h1>Opções de Almoço</h1>
+    <button onclick="window.location.href='index.html'">Voltar ao Menu</button>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <div class="menu-container">
+    <div class="meal-options">
+      <h2>Escolha seu Prato:</h2>
+
+      <!-- Prato: Strogonoff de Carne -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th/id/OIP.LJTn1EdAWyabmd2EdzQEhAHaJr?w=138&h=181&c=7&r=0&o=5&pid=1.7" alt="Strogonoff de Carne">
+        <h3>Strogonoff de Carne</h3>
+        <p>Carne em cubos, creme de leite, molho de tomate e champignon.</p>
+        <p><strong>Preço: R$ 15,90</strong></p>
+        <label><input type="checkbox"> Retirar champignon</label>
+        <label><input type="checkbox"> Retirar molho de tomate</label>
+        <button onclick="addItemToCart('Strogonoff de Carne', 15.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Prato: Bife à Milanesa -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th?id=OSK.ee697da8e92fb647fe89a5243f67c8f5&w=220&h=123&rs=2&qlt=80&o=6&cdv=1&pid=16.1" alt="Bife à Milanesa">
+        <h3>Bife à Milanesa</h3>
+        <p>Bife empanado, arroz e batata frita.</p>
+        <p><strong>Preço: R$ 25,90</strong></p>
+        <label><input type="checkbox"> Retirar arroz</label>
+        <label><input type="checkbox"> Retirar batata frita</label>
+        <button onclick="addItemToCart('Bife à Milanesa', 25.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Prato: Almôndegas -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th?id=OSK.HEROBCf7QoDhc-0kOiZkRr91YD6gESkS0SUymC1MCG_fAoE&w=472&h=280&c=13&rs=2&o=6&pid=SANGAM" alt="Almôndegas">
+        <h3>Almôndegas</h3>
+        <p>Carne moída temperada e frita, acompanhada de molho de tomate.</p>
+        <p><strong>Preço: R$ 12,90</strong></p>
+        <label><input type="checkbox"> Retirar molho de tomate</label>
+        <button onclick="addItemToCart('Almôndegas', 12.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Prato: Carne Assada -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th/id/OIP.pg3fiUyWLD2_6dUdn7-bUAHaEm?w=298&h=185&c=7&r=0&o=5&pid=1.7" alt="Carne Assada">
+        <h3>Carne Assada</h3>
+        <p>Carne assada lentamente, servida com legumes variados.</p>
+        <p><strong>Preço: R$ 35,90</strong></p>
+        <label><input type="checkbox"> Retirar legumes</label>
+        <button onclick="addItemToCart('Carne Assada', 35.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Prato: Espetinho -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th?id=OSK.8ddb07c87d713c9fd70a62f5e6ba8a61&w=197&h=118&c=7&rs=2&qlt=80&o=6&cdv=1&pid=16.1" alt="Espetinho">
+        <h3>Espetinho</h3>
+        <p>Carne em espetos, acompanhada de farofa e vinagrete.</p>
+        <p><strong>Preço: R$ 4,90</strong></p>
+        <label><input type="checkbox"> Retirar farofa</label>
+        <label><input type="checkbox"> Retirar vinagrete</label>
+        <button onclick="addItemToCart('Espetinho', 4.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <!-- Prato: Rocambole de Carne -->
+      <div class="meal-item">
+        <img src="https://th.bing.com/th?id=OSK.ff2c4c7349a764b6fbd2303a8dd33356&w=220&h=157&rs=2&qlt=80&o=6&cdv=1&pid=16.1" alt="Rocambole de Carne">
+        <h3>Rocambole de Carne</h3>
+        <p>Rocambole de carne moída recheado com queijo e presunto.</p>
+        <p><strong>Preço: R$ 27,90</strong></p>
+        <label><input type="checkbox"> Retirar queijo</label>
+        <button onclick="addItemToCart('Rocambole de Carne', 27.90)">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+
+    <!-- Carrinho -->
+    <div class="cart">
+      <h2>Carrinho de Compras</h2>
+      <ul id="cart-items"></ul>
+      <h3>Total: R$ <span id="total-price">0.00</span></h3>
+      <button onclick="checkout()">Finalizar Compra</button>
+    </div>
+  </div>
+
+  <!-- Modal de Login -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <h2 id="modalTitle">Login</h2>
+      <div id="loginFields">
+        <input type="text" placeholder="Email" required>
+        <input type="password" placeholder="Senha" required>
+        <button onclick="loginWithGoogle()">Entrar com Google</button>
+        <div id="toggleFormText">
+          Não tem uma conta? <a href="#" onclick="toggleForm()">Registrar-se</a>
+        </div>
+      </div>
+      <div id="registerFields" style="display:none;">
+        <input type="text" placeholder="Nome" required>
+        <input type="text" placeholder="Email" required>
+        <input type="password" placeholder="Senha" required>
+        <button onclick="toggleForm()">Registrar</button>
+        <div id="toggleFormText">
+          Já tem uma conta? <a href="#" onclick="toggleForm()">Entrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
